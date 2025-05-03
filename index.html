@@ -3,18 +3,535 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Gajjela Adithya</title>
+    <title>Portfolio - Gajjela Adithya | Full Stack Developer</title>
+    
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" href="styles.css">
+    
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <!-- Three.js Import Map -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.132.2/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.132.2/examples/jsm/"
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --primary-color: #6c63ff;
+            --secondary-color: #4d44db;
+            --accent-color: #ff6584;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7ff;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+        
+        /* Floating Animation */
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Glass Morphism Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25);
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Navigation */
+        .navbar {
+            padding: 20px 0;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        
+        .navbar.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            margin: 0 10px;
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+        
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .hero-content {
+            z-index: 1;
+        }
+        
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108, 99, 255, 0.4);
+        }
+        
+        .btn-outline-primary {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-primary:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3);
+        }
+        
+        /* Section Titles */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 60px;
+            font-weight: 800;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 4px;
+            bottom: -10px;
+            left: 25%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+        
+        /* About Section */
+        .about-img {
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transform: perspective(1000px) rotateY(-10deg);
+            transition: all 0.5s ease;
+        }
+        
+        .about-img:hover {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+        
+        /* Skills Section */
+        .skill-card {
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .skill-card i {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Projects Section */
+        .project-card {
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: none;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-card .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .project-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+        
+        /* Experience Section */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            padding: 20px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 4px solid var(--primary-color);
+            border-radius: 50%;
+            top: 30px;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+            text-align: right;
+        }
+        
+        .right {
+            left: 50%;
+            text-align: left;
+        }
+        
+        .left::after {
+            right: -12px;
+        }
+        
+        .right::after {
+            left: -12px;
+        }
+        
+        /* Contact Section */
+        .contact-info i {
+            width: 50px;
+            height: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 50%;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .form-control {
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(108, 99, 255, 0.25);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin: 0 10px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item::after {
+                left: 21px;
+            }
+            
+            .left, .right {
+                left: 0;
+                text-align: left;
+            }
+            
+            .left::after, .right::after {
+                left: 21px;
+            }
+        }
+        
+        /* Floating Shapes */
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .shape-1 {
+            top: 10%;
+            left: 5%;
+            width: 200px;
+            height: 200px;
+            background: var(--primary-color);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        .shape-2 {
+            top: 60%;
+            right: 5%;
+            width: 150px;
+            height: 150px;
+            background: var(--accent-color);
+            border-radius: 50% 50% 20% 80% / 60% 30% 70% 40%;
+            animation: float 12s infinite ease-in-out reverse;
+        }
+        
+        .shape-3 {
+            bottom: 10%;
+            left: 30%;
+            width: 100px;
+            height: 100px;
+            background: var(--secondary-color);
+            border-radius: 40% 60% 60% 40% / 70% 50% 50% 30%;
+            animation: float 10s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(5deg);
+            }
+        }
+        
+        /* Particle Background */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        /* 3D Cube Animation */
+        .cube-container {
+            perspective: 1000px;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+        
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 15s infinite linear;
+        }
+        
+        .cube-face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            background: rgba(108, 99, 255, 0.7);
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cube-face.front { transform: rotateY(0deg) translateZ(100px); }
+        .cube-face.back { transform: rotateY(180deg) translateZ(100px); }
+        .cube-face.right { transform: rotateY(90deg) translateZ(100px); }
+        .cube-face.left { transform: rotateY(-90deg) translateZ(100px); }
+        .cube-face.top { transform: rotateX(90deg) translateZ(100px); }
+        .cube-face.bottom { transform: rotateX(-90deg) translateZ(100px); }
+        
+        @keyframes rotate {
+            from { transform: rotateX(0deg) rotateY(0deg); }
+            to { transform: rotateX(360deg) rotateY(360deg); }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">Gajjela Adithya</a>
+            <a class="navbar-brand" href="#">Gajjela Adithya</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -25,100 +542,254 @@
                     <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
                     <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
                     <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
-                    <!-- <li class="nav-item"><a class="nav-link" href="#certifications">Certifications</a></li> -->
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Home / Introduction -->
-    <section id="home" class="hero-section d-flex align-items-center">
-        <div class="container text-center text-white">
-            <img src="profile.jpeg" alt="Gajjela Adithya" class="rounded-circle profile-img mb-4 animate__animated animate__fadeIn">
-            <h1 class="display-4 fw-bold animate__animated animate__fadeInUp">Gajjela Adithya</h1>
-            <p class="lead">Full Stack Developer</p>
-            <p class="fs-5">"Building Scalable Solutions with Passion and Precision"</p>
-            <a href="resume.pdf" class="btn btn-outline-light mt-3" download>Download Resume</a>
+    <!-- Hero Section with 3D Background -->
+    <section id="home" class="hero-section">
+        <canvas id="hero-canvas"></canvas>
+        <div id="particles-js"></div>
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 order-lg-1 order-2">
+                    <div class="hero-content text-center text-lg-start">
+                        <h1 class="hero-title animate__animated animate__fadeInDown">Gajjela Adithya</h1>
+                        <h2 class="hero-subtitle gradient-text animate__animated animate__fadeInDown animate__delay-1s">Full Stack Developer</h2>
+                        <p class="lead mb-4 animate__animated animate__fadeIn animate__delay-2s">Crafting digital experiences with clean code and innovative solutions</p>
+                        <div class="animate__animated animate__fadeInUp animate__delay-3s">
+                            <a href="#contact" class="btn btn-primary me-2">Hire Me</a>
+                            <a href="resume.pdf" class="btn btn-outline-primary" download>Download CV</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 order-lg-2 order-1 mb-5 mb-lg-0">
+                    <div class="text-center animate__animated animate__fadeInRight animate__delay-1s">
+                        <div class="cube-container floating">
+                            <div class="cube">
+                                <div class="cube-face front"><i class="fas fa-code"></i></div>
+                                <div class="cube-face back"><i class="fas fa-mobile-alt"></i></div>
+                                <div class="cube-face right"><i class="fas fa-server"></i></div>
+                                <div class="cube-face left"><i class="fas fa-database"></i></div>
+                                <div class="cube-face top"><i class="fas fa-cloud"></i></div>
+                                <div class="cube-face bottom"><i class="fas fa-cogs"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- About Me -->
+    <!-- About Me Section -->
     <section id="about" class="py-5">
         <div class="container">
-            <h2 class="section-title text-center">About Me</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="fs-5">I am Gajjela Adithya, a recent B.Tech graduate in Computer Science (JNTUH, 2023) and a software engineer skilled in React Native, Node.js, MongoDB, Java, and PHP. I’ve built web and mobile applications, including the Zikki App for learning courses, a Service App for various services, the Zikki Website, and projects for training institutes and wood-based industries using modern frameworks.</p>
-                    <p class="fs-5">Currently, I’m working as a Full Stack Developer at CYE Technology (joined November 2024), where I’m gaining hands-on experience in creating innovative solutions. I’m passionate about crafting scalable, user-focused applications and continuously growing my expertise in back-end and mobile development.</p>
+            <h2 class="section-title text-center" data-aos="fade-up">About Me</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="position-relative" data-aos="fade-right">
+                        <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Gajjela Adithya" class="img-fluid about-img">
+                        <div class="position-absolute top-0 start-0 w-100 h-100 border border-4 border-primary rounded-3" style="z-index: -1; transform: translate(20px, 20px);"></div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <ul class="list-unstyled">
-                        <li><i class="bi bi-check-circle-fill text-primary me-2"></i>B.Tech in Computer Science (JNTUH, 2023)</li>
-                        <li><i class="bi bi-check-circle-fill text-primary me-2"></i>Expertise: Full-stack & mobile app development</li>
-                        <li><i class="bi bi-check-circle-fill text-primary me-2"></i>Goal: Innovate in scalable tech solutions</li>
-                    </ul>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <h3 class="mb-4">Innovative Full Stack Developer</h3>
+                    <p class="mb-4">I am Gajjela Adithya, a passionate Full Stack Developer with expertise in building modern web and mobile applications. My journey in technology began with a B.Tech in Computer Science from JNTUH (2023), and since then I've been crafting digital solutions that make an impact.</p>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3">
+                                <i class="fas fa-laptop-code fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0">Web & Mobile Development</h5>
+                                <p class="mb-0">Building responsive and performant applications</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3">
+                                <i class="fas fa-server fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0">Backend Architecture</h5>
+                                <p class="mb-0">Designing scalable and secure server solutions</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="fas fa-lightbulb fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0">Problem Solving</h5>
+                                <p class="mb-0">Creative solutions to complex technical challenges</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary bg-opacity-10 p-2 rounded me-3">
+                                    <i class="fas fa-graduation-cap text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Education</h6>
+                                    <p class="mb-0">B.Tech in CSE</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary bg-opacity-10 p-2 rounded me-3">
+                                    <i class="fas fa-briefcase text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Experience</h6>
+                                    <p class="mb-0">1+ Years</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Skills & Technologies -->
+    <!-- Skills Section -->
     <section id="skills" class="py-5 bg-light">
         <div class="container">
-            <h2 class="section-title text-center">Skills & Technologies</h2>
+            <h2 class="section-title text-center" data-aos="fade-up">Skills & Technologies</h2>
+            <p class="text-center mb-5" data-aos="fade-up" data-aos-delay="100">I've worked with a variety of technologies in the web and mobile development world</p>
+            
             <div class="row g-4">
-                <div class="col-md-4 col-sm-6">
-                    <div class="card skill-card animate__animated animate__fadeInUp">
+                <!-- Frontend Skills -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="glass-card skill-card h-100">
                         <div class="card-body text-center">
-                            <i class="bi bi-code-slash fs-2 text-primary mb-3"></i>
-                            <h5>Programming</h5>
-                            <p>Java, JavaScript, PHP, C</p>
+                            <div class="icon-container mb-4">
+                                <i class="fas fa-laptop-code fa-3x gradient-text"></i>
+                            </div>
+                            <h4 class="mb-3">Frontend</h4>
+                            <div class="d-flex flex-wrap justify-content-center">
+                                <span class="badge bg-primary bg-opacity-10 text-primary m-1">HTML5</span>
+                                <span class="badge bg-primary bg-opacity-10 text-primary m-1">CSS3</span>
+                                <span class="badge bg-primary bg-opacity-10 text-primary m-1">JavaScript</span>
+                                <span class="badge bg-primary bg-opacity-10 text-primary m-1">Bootstrap</span>
+                                <span class="badge bg-primary bg-opacity-10 text-primary m-1">React Native</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="card skill-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                
+                <!-- Backend Skills -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="glass-card skill-card h-100">
                         <div class="card-body text-center">
-                            <i class="bi bi-globe fs-2 text-primary mb-3"></i>
-                            <h5>Web Development</h5>
-                            <p>HTML, CSS, Bootstrap</p>
+                            <div class="icon-container mb-4">
+                                <i class="fas fa-server fa-3x gradient-text"></i>
+                            </div>
+                            <h4 class="mb-3">Backend</h4>
+                            <div class="d-flex flex-wrap justify-content-center">
+                                <span class="badge bg-primary bg-opacity-10 text-primary m-1">Node.js</span>
+                                <span class="badge bg-primary bg-opacity-10 text-primary m-1">Java</span>
+                                <span class="badge bg-primary bg-opacity-10 text-primary m-1">PHP</span>
+                                <span class="badge bg-primary bg-opacity-10 text-primary m-1">Laravel</span>
+                                <span class="badge bg-primary bg-opacity-10 text-primary m-1">CakePHP</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="card skill-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                
+                <!-- Database & Tools -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="glass-card skill-card h-100">
                         <div class="card-body text-center">
-                            <i class="bi bi-server fs-2 text-primary mb-3"></i>
-                            <h5>Backend</h5>
-                            <p>Node.js, Java Servlets, Laravel, CakePHP</p>
+                            <div class="icon-container mb-4">
+                                <i class="fas fa-database fa-3x gradient-text"></i>
+                            </div>
+                            <h4 class="mb-3">Database & Tools</h4>
+                            <div class="d-flex flex-wrap justify-content-center">
+                                <span class="badge bg-primary bg-opacity-10 text-primary m-1">MySQL</span>
+                                <span class="badge bg-primary bg-opacity-10 text-primary m-1">MongoDB</span>
+                                <span class="badge bg-primary bg-opacity-10 text-primary m-1">Git</span>
+                                <span class="badge bg-primary bg-opacity-10 text-primary m-1">Expo CLI</span>
+                                <span class="badge bg-primary bg-opacity-10 text-primary m-1">Tomcat</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="card skill-card animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
-                        <div class="card-body text-center">
-                            <i class="bi bi-database fs-2 text-primary mb-3"></i>
-                            <h5>Databases</h5>
-                            <p>MySQL (phpMyAdmin), MongoDB</p>
+            </div>
+            
+            <!-- Skill Bars -->
+            <div class="row mt-5">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>React Native</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Node.js</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Java</span>
+                            <span>75%</span>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="card skill-card animate__animated animate__fadeInUp" style="animation-delay: 0.8s;">
-                        <div class="card-body text-center">
-                            <i class="bi bi-tools fs-2 text-primary mb-3"></i>
-                            <h5>Frameworks & Tools</h5>
-                            <p>React Native, Expo CLI, Tomcat, Git</p>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>PHP</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="card skill-card animate__animated animate__fadeInUp" style="animation-delay: 1s;">
-                        <div class="card-body text-center">
-                            <i class="bi bi-shield-lock fs-2 text-primary mb-3"></i>
-                            <h5>Security</h5>
-                            <p>BCrypt, Reverse Proxy</p>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>MySQL</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>MongoDB</span>
+                            <span>70%</span>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </div>
@@ -126,56 +797,125 @@
         </div>
     </section>
 
-    <!-- Projects -->
+    <!-- Projects Section -->
     <section id="projects" class="py-5">
         <div class="container">
-            <h2 class="section-title text-center">Projects</h2>
+            <h2 class="section-title text-center" data-aos="fade-up">My Projects</h2>
+            <p class="text-center mb-5" data-aos="fade-up" data-aos-delay="100">Here are some of my recent works</p>
+            
             <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="card project-card animate__animated animate__fadeInLeft">
-                        <div class="card-body">
-                            <h5 class="fw-bold">Zikki App</h5>
-                            <p class="text-muted">Mobile app for learning courses</p>
-                            <p><strong>Technologies:</strong> React Native (Expo), Node.js, MySQL</p>
-                            <p><strong>Features:</strong> Course browsing, user authentication, progress tracking</p>
-                            <a href="#" class="btn btn-github"><i class="bi bi-github me-2"></i>GitHub</a>
-                            <!-- <button class="btn btn-link mt-2" data-bs-toggle="modal" data-bs-target="#projectModal-zikki">View Screenshots</button> -->
+                <!-- Zikki App -->
+                <div class="col-lg-6" data-aos="fade-up">
+                    <div class="project-card glass-card h-100">
+                        <div class="row g-0 h-100">
+                            <div class="col-md-6">
+                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" class="card-img-top h-100" alt="Zikki App">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h5 class="card-title mb-0">Zikki App</h5>
+                                        <span class="badge bg-primary">Mobile</span>
+                                    </div>
+                                    <p class="card-text text-muted">A mobile application for learning courses with user authentication and progress tracking.</p>
+                                    <div class="mb-3">
+                                        <span class="badge bg-primary bg-opacity-10 text-primary me-1">React Native</span>
+                                        <span class="badge bg-primary bg-opacity-10 text-primary me-1">Node.js</span>
+                                        <span class="badge bg-primary bg-opacity-10 text-primary">MySQL</span>
+                                    </div>
+                                    <div class="d-flex">
+                                        <a href="#" class="btn btn-sm btn-outline-primary me-2">View Project</a>
+                                        <a href="#" class="btn btn-sm btn-primary">GitHub</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card project-card animate__animated animate__fadeInRight">
-                        <div class="card-body">
-                            <h5 class="fw-bold">Service App</h5>
-                            <p class="text-muted">Mobile app providing various services</p>
-                            <p><strong>Technologies:</strong> React Native (Expo), Node.js, MySQL, MongoDB</p>
-                            <p><strong>Features:</strong> Service listings, booking system, user management</p>
-                            <a href="#" class="btn btn-github"><i class="bi bi-github me-2"></i>GitHub</a>
-                            <!-- <button class="btn btn-link mt-2" data-bs-toggle="modal" data-bs-target="#projectModal-service">View Screenshots</button> -->
+                
+                <!-- Service App -->
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="project-card glass-card h-100">
+                        <div class="row g-0 h-100">
+                            <div class="col-md-6">
+                                <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" class="card-img-top h-100" alt="Service App">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h5 class="card-title mb-0">Service App</h5>
+                                        <span class="badge bg-primary">Mobile</span>
+                                    </div>
+                                    <p class="card-text text-muted">A mobile application providing various services with booking system and user management.</p>
+                                    <div class="mb-3">
+                                        <span class="badge bg-primary bg-opacity-10 text-primary me-1">React Native</span>
+                                        <span class="badge bg-primary bg-opacity-10 text-primary me-1">Node.js</span>
+                                        <span class="badge bg-primary bg-opacity-10 text-primary">MongoDB</span>
+                                    </div>
+                                    <div class="d-flex">
+                                        <a href="#" class="btn btn-sm btn-outline-primary me-2">View Project</a>
+                                        <a href="#" class="btn btn-sm btn-primary">GitHub</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card project-card animate__animated animate__fadeInLeft" style="animation-delay: 0.2s;">
-                        <div class="card-body">
-                            <h5 class="fw-bold">Zikki Website</h5>
-                            <p class="text-muted">Web platform for learning courses</p>
-                            <p><strong>Technologies:</strong> Java Servlets, Tomcat Server, MySQL</p>
-                            <p><strong>Features:</strong> Course catalog, user dashboard, admin panel</p>
-                            <a href="#" class="btn btn-github"><i class="bi bi-github me-2"></i>GitHub</a>
-                            <!-- <button class="btn btn-link mt-2" data-bs-toggle="modal" data-bs-target="#projectModal-zikki-web">View Screenshots</button> -->
+                
+                <!-- Zikki Website -->
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-card glass-card h-100">
+                        <div class="row g-0 h-100">
+                            <div class="col-md-6">
+                                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" class="card-img-top h-100" alt="Zikki Website">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h5 class="card-title mb-0">Zikki Website</h5>
+                                        <span class="badge bg-primary">Web</span>
+                                    </div>
+                                    <p class="card-text text-muted">A web platform for learning courses with course catalog and admin panel.</p>
+                                    <div class="mb-3">
+                                        <span class="badge bg-primary bg-opacity-10 text-primary me-1">Java Servlets</span>
+                                        <span class="badge bg-primary bg-opacity-10 text-primary me-1">Tomcat</span>
+                                        <span class="badge bg-primary bg-opacity-10 text-primary">MySQL</span>
+                                    </div>
+                                    <div class="d-flex">
+                                        <a href="#" class="btn btn-sm btn-outline-primary me-2">View Project</a>
+                                        <a href="#" class="btn btn-sm btn-primary">GitHub</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card project-card animate__animated animate__fadeInRight" style="animation-delay: 0.2s;">
-                        <div class="card-body">
-                            <h5 class="fw-bold">Training Institute & WBI Projects</h5>
-                            <p class="text-muted">Web solutions for training and wood industry</p>
-                            <p><strong>Technologies:</strong> PHP, phpMyAdmin (MySQL), Laravel, CakePHP</p>
-                            <p><strong>Features:</strong> Student management (Training), inventory tracking (WBI)</p>
-                            <a href="#" class="btn btn-github"><i class="bi bi-github me-2"></i>GitHub</a>
-                            <!-- <button class="btn btn-link mt-2" data-bs-toggle="modal" data-bs-target="#projectModal-training-wbi">View Screenshots</button> -->
+                
+                <!-- Training Institute & WBI Projects -->
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-card glass-card h-100">
+                        <div class="row g-0 h-100">
+                            <div class="col-md-6">
+                                <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" class="card-img-top h-100" alt="Training & WBI">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h5 class="card-title mb-0">Training Institute & WBI</h5>
+                                        <span class="badge bg-primary">Web</span>
+                                    </div>
+                                    <p class="card-text text-muted">Web solutions for training institutes and wood-based industries with student and inventory management.</p>
+                                    <div class="mb-3">
+                                        <span class="badge bg-primary bg-opacity-10 text-primary me-1">PHP</span>
+                                        <span class="badge bg-primary bg-opacity-10 text-primary me-1">Laravel</span>
+                                        <span class="badge bg-primary bg-opacity-10 text-primary">CakePHP</span>
+                                    </div>
+                                    <div class="d-flex">
+                                        <a href="#" class="btn btn-sm btn-outline-primary me-2">View Project</a>
+                                        <a href="#" class="btn btn-sm btn-primary">GitHub</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -183,160 +923,207 @@
         </div>
     </section>
 
-    <!-- Experience -->
+    <!-- Experience Section -->
     <section id="experience" class="py-5 bg-light">
         <div class="container">
-            <h2 class="section-title text-center">Experience</h2>
+            <h2 class="section-title text-center" data-aos="fade-up">Experience</h2>
+            <p class="text-center mb-5" data-aos="fade-up" data-aos-delay="100">My professional journey in technology</p>
+            
             <div class="timeline">
-                <div class="timeline-item">
-                    <h5 class="fw-bold">Full Stack Developer</h5>
-                    <p class="text-muted">CYE Technology | November 2024 - Present</p>
-                    <p><strong>Technologies:</strong> React Native, Node.js, MongoDB, Mysql, Java Servlets</p> 
-                    <p><strong>Responsibilities:</strong> Developing and maintaining web/mobile applications, implementing scalable back-end solutions as a fresher.</p>
+                <div class="timeline-item right glass-card" data-aos="fade-left">
+                    <div class="p-4">
+                        <h5 class="fw-bold">Full Stack Developer</h5>
+                        <p class="text-muted mb-2">CYE Technology | November 2024 - Present</p>
+                        <p><strong>Technologies:</strong> React Native, Node.js, MongoDB, MySQL, Java Servlets</p>
+                        <p><strong>Responsibilities:</strong> Developing and maintaining web/mobile applications, implementing scalable back-end solutions as a fresher.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Certifications & Achievements -->
-    <!-- <section id="certifications" class="py-5">
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
         <div class="container">
-            <h2 class="section-title text-center">Certifications & Achievements</h2>
+            <h2 class="section-title text-center" data-aos="fade-up">Contact Me</h2>
+            <p class="text-center mb-5" data-aos="fade-up" data-aos-delay="100">Let's connect and discuss your next project</p>
+            
             <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="fw-bold">Full Stack Development</h5>
-                            <p class="text-muted">Udemy | 2022</p>
-                            <p>Completed a comprehensive course on building full-stack applications.</p>
-                        </div>
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="glass-card p-4">
+                        <h4 class="mb-4 gradient-text">Get in Touch</h4>
+                        <ul class="list-unstyled">
+                            <li class="mb-3 d-flex align-items-center">
+                                <i class="fas fa-envelope contact-info"></i>
+                                <div>
+                                    <h6 class="mb-0">Email</h6>
+                                    <a href="mailto:gajjelaadithya2000@gmail.com">gajjelaadithya2000@gmail.com</a>
+                                </div>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center">
+                                <i class="fas fa-phone contact-info"></i>
+                                <div>
+                                    <h6 class="mb-0">Phone</h6>
+                                    <a href="tel:+916305891366">+91 6305891366</a>
+                                </div>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center">
+                                <i class="fab fa-linkedin contact-info"></i>
+                                <div>
+                                    <h6 class="mb-0">LinkedIn</h6>
+                                    <a href="https://www.linkedin.com/in/gajjela-adithya-63a80022a/" target="_blank">Gajjela Adithya</a>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <i class="fab fa-github contact-info"></i>
+                                <div>
+                                    <h6 class="mb-0">GitHub</h6>
+                                    <a href="https://github.com/AdithyaPatel2000" target="_blank">AdithyaPatel2000</a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="fw-bold">Hackathon Winner</h5>
-                            <p class="text-muted">TechFest 2022</p>
-                            <p>Won 1st place for developing an innovative EdTech solution.</p>
-                        </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="glass-card p-4">
+                        <h4 class="mb-4 gradient-text">Send a Message</h4>
+                        <form>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Your Name" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Your Email" required>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary">Send Message</button>
+                        </form>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-    <!-- Contact Information -->
-    <section id="contact" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="section-title text-center">Contact Me</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <ul class="list-unstyled">
-                        <li><i class="bi bi-envelope-fill me-2 text-primary"></i>Email: gajjelaadithya2000@gmail.com</li>
-                        <li><i class="bi bi-telephone-fill me-2 text-primary"></i>Phone: +91 6305891366 </li>
-                        <li><i class="bi bi-linkedin me-2 text-primary"></i><a href="https://www.linkedin.com/in/gajjela-adithya-63a80022a/">LinkedIn</a></li>
-                        <li><i class="bi bi-github me-2 text-primary"></i><a href="https://github.com/AdithyaPatel2000">GitHub</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-6">
-                    <form>
-                        <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Name" required>
-                        </div>
-                        <div class="mb-3">
-                            <input type="email" class="form-control" placeholder="Email" required>
-                        </div>
-                        <div class="mb-3">
-                            <textarea class="form-control" rows="4" placeholder="Message" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Project Modals -->
-    <div class="modal fade" id="projectModal-zikki" tabindex="-1" aria-labelledby="projectModalLabel-zikki" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="projectModalLabel-zikki">Zikki App</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center text-md-start mb-4 mb-md-0">
+                    <h5 class="gradient-text">Gajjela Adithya</h5>
+                    <p class="mb-0">Full Stack Developer</p>
                 </div>
-                <div class="modal-body">
-                    <div id="carouselExample-zikki" class="carousel slide">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="https://via.placeholder.com/650x650" class="d-block w-100" alt="Zikki App">
-                            </div>
-                        </div>
+                <div class="col-md-4 text-center mb-4 mb-md-0">
+                    <div class="social-icons">
+                        <a href="https://www.linkedin.com/in/gajjela-adithya-63a80022a/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/AdithyaPatel2000" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="mailto:gajjelaadithya2000@gmail.com"><i class="fas fa-envelope"></i></a>
                     </div>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <p class="mb-0">&copy; 2025 Gajjela Adithya. All Rights Reserved.</p>
                 </div>
             </div>
         </div>
-    </div>
+    </footer>
 
-    <div class="modal fade" id="projectModal-service" tabindex="-1" aria-labelledby="projectModalLabel-service" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="projectModalLabel-service">Service App</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="carouselExample-service" class="carousel slide">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="https://via.placeholder.com/650x650" class="d-block w-100" alt="Service App">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="projectModal-zikki-web" tabindex="-1" aria-labelledby="projectModalLabel-zikki-web" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="projectModalLabel-zikki-web">Zikki Website</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="carouselExample-zikki-web" class="carousel slide">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="https://via.placeholder.com/650x650" class="d-block w-100" alt="Zikki Website">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="projectModal-training-wbi" tabindex="-1" aria-labelledby="projectModalLabel-training-wbi" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="projectModalLabel-training-wbi">Training Institute & WBI Projects</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="carouselExample-training-wbi" class="carousel slide">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="https://via.placeholder.com/650x650" class="d-block w-100" alt="Training & WBI">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Particles.js Configuration
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#6c63ff' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: false },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#6c63ff',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'repulse' },
+                    onclick: { enable: true, mode: 'push' },
+                    resize: true
+                },
+                modes: {
+                    repulse: { distance: 100, duration: 0.4 },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        // Three.js Hero Background
+        async function initThreeJS() {
+            const canvas = document.getElementById('hero-canvas');
+            if (!canvas) return;
+
+            const { Scene, PerspectiveCamera, WebGLRenderer, BoxGeometry, MeshBasicMaterial, Mesh } = await import('three');
+
+            const scene = new Scene();
+            const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new WebGLRenderer({ canvas, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            const geometry = new BoxGeometry(1, 1, 1);
+            const material = new MeshBasicMaterial({ color: 0x6c63ff, wireframe: true });
+            const cube = new Mesh(geometry, material);
+            scene.add(cube);
+
+            camera.position.z = 5;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        initThreeJS();
+    </script>
 </body>
 </html>
